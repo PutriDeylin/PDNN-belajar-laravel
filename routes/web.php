@@ -14,7 +14,11 @@ use App\Http\Controllers\HomeController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+ Route::get('/', function () {
+   return view('welcome');
+ });
+ 
 Route::get('/hello', [HomeController::class, 'index']);
+
+Route::get('/dashboard', [HomeController::class, 'main'])->name('dashboard');
+Route::get('/product', [HomeController::class, 'product'])->name('product');
