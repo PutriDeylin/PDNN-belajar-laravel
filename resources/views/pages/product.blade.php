@@ -46,7 +46,6 @@
                   </form>
                   <!-- / search data -->
                 </div>
-                <!-- <h3 class="card-title col align-self-center">List Products</h3> -->
               <div class="card-body">
                 <table class="table table-bordered">
                   <thead>
