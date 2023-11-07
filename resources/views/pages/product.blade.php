@@ -50,12 +50,12 @@
                 <table class="table table-bordered">
                   <thead>
                     <tr>
-                      <th style="width: 10px">Id</th>
+                      <th>Id</th>
                       <th>Product Name</th>
                       <th>Category</th>
                       <th>Price</th>
                       <th>Image</th>
-                      <th style="width: 200px;">Action</th>
+                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
