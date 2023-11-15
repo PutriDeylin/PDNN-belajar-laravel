@@ -11,7 +11,7 @@
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
+              <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
               <li class="breadcrumb-item active">Products</li>
             </ol>
           </div>
@@ -29,11 +29,22 @@
                 <div class="col-10">
                   <!-- add data -->
                   <div class="col-sm-2">
-                      <a href="#" class="btn btn-primary"><i class="nav-icon fas fa-plus mr-2"></i> Add Product</a>
+                      <a href="{{ route('products.create') }}" class="btn btn-primary"><i class="nav-icon fas fa-plus mr-2"></i> Add Product</a>
                     </div>
                   </div>
                   <!-- / add data -->
                   <!-- search data -->
+                  <form action="{{ route('products') }}" method="get">
+                    <div class="input-group col-sm-11 mr-3">
+                      <input type="text" name="search" id="search" class="form-control" placeholder="Search">
+                      <div class="input-group-append">
+                          <button class="btn btn-default" type="submit">
+                            <i class="fas fa-search fa-sm"></i>
+                          </button>
+                      </div>
+                    </div>
+                  </form>
+                  <!-- search data
                   <form action="product.php?aksi=cari" method="post">
                     <div class="input-group col-sm-11 mr-3">
                       <input type="text" name="search" id="search" class="form-control" placeholder="Search">
@@ -44,40 +55,67 @@
                       </div>
                     </div>
                   </form>
-                  <!-- / search data -->
+              search data -->
                 </div>
               <div class="card-body">
+              @if (session('success'))
+                    <div class="alert alert-success bg-success" role="alert">
+                        {{ session('success') }}
+                    </div>
+                @endif
                 <table class="table table-bordered">
                   <thead>
                     <tr>
-                      <th>Id</th>
-                      <th>Product Name</th>
-                      <th>Category</th>
-                      <th>Price</th>
-                      <th>Image</th>
-                      <th>Action</th>
+                      <th class="text-center">Id</th>
+                      <th class="text-center">Product Name</th>
+                      <th class="text-center">Category</th>
+                      <th class="text-center">Price</th>
+                      <th class="text-center">Image</th>
+                      <th class="text-center">Action</th>
                     </tr>
                   </thead>
                   <tbody>
+                  @foreach ($products as $key => $product)
+                    {{-- @dd($product) --}}
                     <tr>
-                        <td>1</td>
-                        <td>Sepatu Under Armour</td>
-                        <td>Sport</td>
-                        <td>200.000</td>
+                        <td>{{ $startNumber++ }}</td>
+                        <td>{{ $product->product_name }}</td>
+                        <td>{{ $product->category_name }}</td>
+                        <td>{{ $product->price }}</td>
                         <td>
+                        @php
+                            $images = json_decode($product->image);
+                        @endphp
+                        @if (is_array($images))
                         <div class="text-center">
-                            <img src="{{ asset('image/sepatu.jpg') }}" alt="" width="100">
+                            @foreach ($images as $image)
+                            <img src="{{ asset('storage/image/' . $image) }}" alt="image" width="100">
+                            @endforeach
                         </div>
+                        @endif
                         </td>
-                        <td>
-                            <a href="#" class="btn btn-warning"><i class="nav-icon fas fa-edit mr-2"></i>Edit</a>
-                            <a href="#" class="btn btn-danger"><i class="nav-icon fas fa-trash-alt mr-2"></i>Delete</a>
+                        <td class="text-center">
+                          <div class="btn-group" role="group" aria-label="Product">
+                            <a href="{{ route('products.edit', $product->id) }}" class="btn btn-warning"><i class="nav-icon fas fa-edit mr-2"></i>Edit</a>
+
+                            <form action="{{ route('products.delete', $product->id) }}" method="post">
+                                @csrf
+                                @method('delete')
+                                <button class="btn btn-danger ml-2" type="submit"><i class="nav-icon fas fa-trash-alt mr-2"></i>Delete</button>
+                          </form>
+                        </button>
                         </td>
                     </tr>
+                    @endforeach
                   </tbody>
                 </table>
               </div>
               <!-- /.card-body -->
+              <div class="card-footer bg-transparent border">
+                <div class="float-right">
+                    {{ $products->onEachSide(1)->links('pagination::bootstrap-4') }}
+                </div>
+              </div>
             </div>
             <!-- /.card -->
           </div>
@@ -88,6 +126,6 @@
     </section>
     <!-- /.content -->
   </div>
-  <!-- /.content-wrapper -->
+<!-- /.content-wrapper -->
 
 @endsection

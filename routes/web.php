@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProductController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -21,4 +24,11 @@ use App\Http\Controllers\HomeController;
 Route::get('/hello', [HomeController::class, 'index']);
 
 Route::get('/dashboard', [HomeController::class, 'main'])->name('dashboard');
-Route::get('/product', [HomeController::class, 'product'])->name('product');
+
+// CRUD
+Route::get('/products', [ProductController::class, 'index'])->name('products');
+Route::get('/products/add', [ProductController::class, 'create'])->name('products.create');
+Route::post('/products', [ProductController::class, 'store'])->name('products.store');
+Route::get('/products/{id}/edit', [ProductController::class, 'edit'])->name('products.edit');
+Route::put('/products/{id}', [ProductController::class, 'update'])->name('products.update');
+Route::delete('/products/{id}', [ProductController::class, 'destroy'])->name('products.delete');
