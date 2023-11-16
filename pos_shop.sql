@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.30, for Win64 (x86_64)
 --
--- Host: localhost    Database: tugas23
+-- Host: localhost    Database: tugas25
 -- ------------------------------------------------------
 -- Server version	8.0.30
 
@@ -36,7 +36,7 @@ CREATE TABLE `customers` (
   `is_active` enum('1','0') NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   UNIQUE KEY `customers_UN` (`code`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -45,9 +45,23 @@ CREATE TABLE `customers` (
 
 LOCK TABLES `customers` WRITE;
 /*!40000 ALTER TABLE `customers` DISABLE KEYS */;
-INSERT INTO `customers` VALUES (1,'C001','Adelia Fitri','081336596224','adelia@gmail.com','Gresik','2023-10-21 06:00:25',NULL,NULL,NULL,'1');
+INSERT INTO `customers` VALUES (1,'C0001','Sarah','001122334458','sarah@gmail.com','Bandung','2023-10-30 04:18:21',NULL,NULL,NULL,'1'),(2,'C0002','Bella','089767788917','bel@gmail.com','Yogyakarta','2023-10-30 04:20:49',NULL,NULL,NULL,'1'),(4,'C0003','Linda','08976778900','linda@gmail.com','Bandung','2023-10-30 04:24:23',NULL,NULL,NULL,'1');
 /*!40000 ALTER TABLE `customers` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Temporary view structure for view `dashboard_data`
+--
+
+DROP TABLE IF EXISTS `dashboard_data`;
+/*!50001 DROP VIEW IF EXISTS `dashboard_data`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `dashboard_data` AS SELECT 
+ 1 AS `product_count`,
+ 1 AS `customer_count`,
+ 1 AS `vendor_count`*/;
+SET character_set_client = @saved_cs_client;
 
 --
 -- Table structure for table `product_categories`
@@ -105,7 +119,7 @@ CREATE TABLE `products` (
   UNIQUE KEY `products_UN` (`product_code`),
   KEY `products_FK` (`category_id`),
   CONSTRAINT `products_FK` FOREIGN KEY (`category_id`) REFERENCES `product_categories` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -114,7 +128,7 @@ CREATE TABLE `products` (
 
 LOCK TABLES `products` WRITE;
 /*!40000 ALTER TABLE `products` DISABLE KEYS */;
-INSERT INTO `products` VALUES (36,'Sepatu Rebook',1,'P0001','1','2023-11-14 09:35:16','2023-11-14 23:24:45',NULL,NULL,'Sepatu',200000.00,'pcs',1.00,2,'[\"1699954516.jpg\"]'),(38,'Face Wash',2,'P0002','1','2023-11-14 09:36:55','2023-11-14 23:24:31',NULL,NULL,'h',200000.00,'pcs',1.00,99,'[\"1699954615.jpeg\",\"1699954615.jpg\"]'),(43,'Parfum Evangeline',2,'P0003','1','2023-11-14 10:12:16',NULL,NULL,NULL,'parfum',100000.00,'pcs',1.00,3,'[\"1699956736.jpg\"]'),(49,'Jam Tangan Rolex',3,'P0004','1','2023-11-15 03:48:58','2023-11-14 23:22:46',NULL,NULL,NULL,300000.00,'PCS',0.00,0,'[\"1700020138.jpg\"]');
+INSERT INTO `products` VALUES (33,'Sepatu',1,'P0001','1','2023-11-16 09:13:49','2023-11-16 02:14:41',NULL,NULL,NULL,300000.00,'PCS',0.00,0,'[\"1700126028.jpg\",\"1700126029.jpg\"]'),(34,'Kacamata Hitam',3,'P0002','1','2023-11-16 09:34:33',NULL,NULL,NULL,NULL,10000.00,'PCS',0.00,0,'[\"1700127273.jpg\"]'),(36,'Face Wash',2,'P0003','1','2023-11-16 09:36:27',NULL,NULL,NULL,NULL,18000.00,'PCS',0.00,0,'[\"1700127387.jpg\"]');
 /*!40000 ALTER TABLE `products` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -330,18 +344,18 @@ CREATE TABLE `users` (
   `name` varchar(100) NOT NULL,
   `email` varchar(100) DEFAULT NULL,
   `phone_number` varchar(15) DEFAULT NULL,
-  `username` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+  `username` varchar(100) NOT NULL,
   `password` varchar(64) DEFAULT NULL,
   `last_login_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `created_by` int DEFAULT NULL,
   `updated_by` int DEFAULT NULL,
-  `group_id` int DEFAULT NULL,
+  `group_id` int NOT NULL,
   `is_active` enum('1','0') NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_UN` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -350,7 +364,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Super Admin','super@gmail.com','001122334455','uadmin','5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5',NULL,'2023-10-11 06:23:15','2023-10-11 06:23:59',NULL,NULL,1,'1'),(2,'Seller Satu','seller@gmail.com','001122334456','seller','5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5',NULL,'2023-10-11 06:24:40',NULL,NULL,NULL,2,'1'),(3,'Admin Product','adminproduct@gmail.com','001122334457','products','5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5',NULL,'2023-10-11 06:25:14',NULL,NULL,NULL,3,'1'),(4,'Adelia Fitri','adeliafitri972@gmail.com','085784387196',NULL,'e10adc3949ba59abbe56e057f20f883e',NULL,'2023-10-27 13:16:03',NULL,NULL,NULL,NULL,'1'),(5,'Admin Adel','adeliafitri972@gmail.com','081336596224','81336596224','25d55ad283aa400af464c76d713c07ad',NULL,'2023-10-29 03:52:58','2023-10-29 03:56:02',NULL,NULL,3,'1'),(6,'Admin 2','admin@gmail.com','081345678902','81345678902','e807f1fcf82d132f9bb018ca6738a19f',NULL,'2023-10-29 04:40:57',NULL,NULL,NULL,3,'1'),(7,'Admin 3','admin3@gmail.com','087531246930','87531246930','32cacb2f994f6b42183a1300d9a3e8d6',NULL,'2023-11-02 10:21:09',NULL,NULL,NULL,3,'1');
+INSERT INTO `users` VALUES (1,'Super Admin','super@gmail.com','001122334455','admin','admin',NULL,'2023-10-11 06:23:15','2023-10-30 01:34:31',NULL,NULL,1,'1'),(2,'Seller Satu','seller@gmail.com','001122334456','seller','seller',NULL,'2023-10-11 06:24:40','2023-10-30 01:34:36',NULL,NULL,2,'1'),(3,'Admin Product','adminproduct@gmail.com','001122334457','products','admin1',NULL,'2023-10-11 06:25:14','2023-10-30 04:33:05',NULL,NULL,3,'1'),(27,'putri','adminproduct@gmail.com','001122334458','001122334458','$2y$10$YSbtpjSYBViEGpCDr70A4usJHcOKLosb71H/xIGW9t3MeTqBRYr7u',NULL,'2023-10-30 07:05:15',NULL,NULL,NULL,3,'1'),(42,'Deylin','adminproduct@gmail.com','001122334459','001122334459','$2y$10$/m12s.aNfj3mAy3xv7HNtuWfHg07hfNF.S0msfKY7ZZhPoYwpYtEy',NULL,'2023-11-04 10:29:44',NULL,NULL,NULL,3,'1');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -384,35 +398,19 @@ CREATE TABLE `vendors` (
 
 LOCK TABLES `vendors` WRITE;
 /*!40000 ALTER TABLE `vendors` DISABLE KEYS */;
-INSERT INTO `vendors` VALUES (1,'V001','Subak Grosir','081974563214','subak_grosir@gmail.com','Surabaya','2023-10-21 06:04:07',NULL,NULL,NULL,'1');
+INSERT INTO `vendors` VALUES (1,'V0001','Tazqia','001122334457','kia@gmail.com','Yogyakarta','2023-10-30 04:18:58',NULL,NULL,NULL,'1');
 /*!40000 ALTER TABLE `vendors` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Temporary view structure for view `view_products`
---
-
-DROP TABLE IF EXISTS `view_products`;
-/*!50001 DROP VIEW IF EXISTS `view_products`*/;
-SET @saved_cs_client     = @@character_set_client;
-/*!50503 SET character_set_client = utf8mb4 */;
-/*!50001 CREATE VIEW `view_products` AS SELECT 
- 1 AS `id`,
- 1 AS `product_name`,
- 1 AS `price`,
- 1 AS `image`,
- 1 AS `category_name`*/;
-SET character_set_client = @saved_cs_client;
-
---
--- Dumping routines for database 'tugas23'
+-- Dumping routines for database 'tugas25'
 --
 
 --
--- Final view structure for view `view_products`
+-- Final view structure for view `dashboard_data`
 --
 
-/*!50001 DROP VIEW IF EXISTS `view_products`*/;
+/*!50001 DROP VIEW IF EXISTS `dashboard_data`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
@@ -421,7 +419,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `view_products` AS select `p`.`id` AS `id`,`p`.`product_name` AS `product_name`,`p`.`price` AS `price`,`p`.`image` AS `image`,`c`.`category_name` AS `category_name` from (`products` `p` join `product_categories` `c` on((`p`.`category_id` = `c`.`id`))) */;
+/*!50001 VIEW `dashboard_data` AS select (select count(0) from `products`) AS `product_count`,(select count(0) from `customers`) AS `customer_count`,(select count(0) from `vendors`) AS `vendor_count` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -435,4 +433,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-15 14:09:36
+-- Dump completed on 2023-11-16 16:40:11
