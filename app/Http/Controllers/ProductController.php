@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -34,28 +35,36 @@ class ProductController extends Controller
     {
         $categories = DB::table('product_categories')->pluck('category_name', 'id');
         return view('pages.addProduct', compact('categories'));
-        // return view('pages.addproduct');
+
     }
 
     public function store(Request $request)
     {
-        // dd($request->all());
 
         $request->validate([
             'product_name' => 'required',
             'product_code' => 'required',
             'category' => 'required|exists:product_categories,id',
+            'description' => 'required',
+            'is_active' => 'nullable|in:on', // konversi 'on' menjadi 1
             'price' => 'required|numeric',
+            'discount_amount' => 'required|numeric',
+            'stock' => 'required|numeric',
+            'unit' => 'required',
             'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         try {
-
+            // Set nilai default 0 jika checkbox tidak dicentang
+            $is_active = $request->has('is_active') == "on" ? 1 : 0;
             $images = [];
 
             if ($request->hasFile('images')) {
                 foreach ($request->file('images') as $image) {
                     $imageName = time() . '.' . $image->getClientOriginalExtension();
+                    while (Storage::exists('public/image/' . $imageName)) {
+                        $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
+                    }
                     $image->storeAs('public/image', $imageName);
                     $images[] = $imageName;
                 }
@@ -65,7 +74,12 @@ class ProductController extends Controller
                 'product_name' => $request->product_name,
                 'product_code' => $request->product_code,
                 'category_id' => $request->category,
+                'description' => $request->description,
+                'is_active' => $is_active,
                 'price' => $request->price,
+                'discount_amount' => $request->discount_amount,
+                'stock' => $request->stock,
+                'unit' => $request->unit,
                 'image' => json_encode($images),
             ]);
 
@@ -83,7 +97,7 @@ class ProductController extends Controller
         // Ambil data produk berdasarkan ID
         $product = Product::findOrFail($id);
 
-        // Ambil data kategori untuk dropdown (jika diperlukan)
+        // Ambil data kategori untuk dropdown (jika perlu)
         $categories = DB::table('product_categories')->pluck('category_name', 'id');
 
         return view('pages.editProduct', compact('product', 'categories'));
@@ -95,12 +109,18 @@ class ProductController extends Controller
             'product_name' => 'required',
             'product_code' => 'required',
             'category' => 'required|exists:product_categories,id',
+            'description' => 'required',
+            'is_active' => 'nullable|in:on',
             'price' => 'required|numeric',
+            'discount_amount' => 'required|numeric',
+            'stock' => 'required|numeric',
+            'unit' => 'required',
             'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         try {
-    
+            // Set nilai default 0 jika checkbox tidak dicentang
+            $is_active = $request->has('is_active') == "on" ? 1 : 0;
             $images = [];
 
             // Jika ada file gambar yang diunggah, proses upload
@@ -108,6 +128,9 @@ class ProductController extends Controller
                 $images = [];
                 foreach ($request->file('images') as $image) {
                     $imageName = time() . '_' . $image->getClientOriginalName();
+                    while (Storage::exists('public/image/' . $imageName)) {
+                        $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
+                    }
                     $image->storeAs('public/image', $imageName);
                     $images[] = $imageName;
                 }
@@ -122,7 +145,12 @@ class ProductController extends Controller
                 'product_name' => $request->product_name,
                 'product_code' => $request->product_code,
                 'category_id' => $request->category,
+                'description' => $request->description,
+                'is_active' => $is_active,
                 'price' => $request->price,
+                'discount_amount' => $request->discount_amount,
+                'stock' => $request->stock,
+                'unit' => $request->unit,
                 // 'image' => json_encode($images),
             ]);
 
