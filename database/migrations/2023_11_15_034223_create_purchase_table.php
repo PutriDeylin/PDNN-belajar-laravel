@@ -19,7 +19,7 @@ return new class extends Migration
             $table->decimal('amount_total', 15, 2)->nullable();
             $table->decimal('discount_amount', 15, 0)->nullable();
             $table->integer('total_products')->nullable();
-            $table->integer('vendor_id');
+            $table->foreignId('vendor_id')->constrained();
             $table->text('description')->nullable();
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();

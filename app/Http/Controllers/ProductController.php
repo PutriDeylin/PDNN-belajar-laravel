@@ -15,7 +15,6 @@ class ProductController extends Controller
             ->join('product_categories', 'products.category_id', '=', 'product_categories.id')
             ->select('products.*', 'product_categories.category_name as category_name');
 
-        // Cek apa ada parameter pencarian
         if ($request->has('search')) {
             $searchTerm = $request->input('search');
             $query->where(function ($query) use ($searchTerm) {
@@ -46,25 +45,28 @@ class ProductController extends Controller
             'product_code' => 'required',
             'category' => 'required|exists:product_categories,id',
             'description' => 'required',
-            'is_active' => 'nullable|in:on', // konversi 'on' menjadi 1
+            'is_active' => 'nullable|in:on',
             'price' => 'required|numeric',
             'discount_amount' => 'required|numeric',
             'stock' => 'required|numeric',
-            'unit' => 'required',
+            'unit' => 'required|string',
             'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         try {
-            // Set nilai default 0 jika checkbox tidak dicentang
+
             $is_active = $request->has('is_active') == "on" ? 1 : 0;
+
             $images = [];
 
             if ($request->hasFile('images')) {
                 foreach ($request->file('images') as $image) {
-                    $imageName = time() . '.' . $image->getClientOriginalExtension();
+                    $imageName = time() . '_' . now()->micro . '.' . $image->getClientOriginalExtension();
+
                     while (Storage::exists('public/image/' . $imageName)) {
                         $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
                     }
+
                     $image->storeAs('public/image', $imageName);
                     $images[] = $imageName;
                 }
@@ -84,20 +86,19 @@ class ProductController extends Controller
             ]);
 
             return redirect()->route('products')
-                ->with('success', 'Successfully Added!');
+                ->with('success', 'Product created successfully.');
         } catch (\Exception $e) {
             return redirect()->route('products.create')
-                ->with('error', 'Error Adding!: ' . $e->getMessage())
+                ->with('error', 'Error creating product: ' . $e->getMessage())
                 ->withInput();
         }
     }
 
     public function edit($id)
     {
-        // Ambil data produk berdasarkan ID
+
         $product = Product::findOrFail($id);
 
-        // Ambil data kategori untuk dropdown (jika perlu)
         $categories = DB::table('product_categories')->pluck('category_name', 'id');
 
         return view('pages.editProduct', compact('product', 'categories'));
@@ -119,27 +120,27 @@ class ProductController extends Controller
         ]);
 
         try {
-            // Set nilai default 0 jika checkbox tidak dicentang
-            $is_active = $request->has('is_active') == "on" ? 1 : 0;
+
+            $is_active = $request->has('is_active') ? 1 : 0;
+
             $images = [];
 
-            // Jika ada file gambar yang diunggah, proses upload
             if ($request->hasFile('images')) {
                 $images = [];
                 foreach ($request->file('images') as $image) {
                     $imageName = time() . '_' . $image->getClientOriginalName();
+
                     while (Storage::exists('public/image/' . $imageName)) {
                         $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
                     }
+
                     $image->storeAs('public/image', $imageName);
                     $images[] = $imageName;
                 }
 
-                // Update nilai 'images' di basis data
-                DB::table('products')->where('id', $id)->update(['images' => json_encode($images)]);
+                DB::table('products')->where('id', $id)->update(['image' => json_encode($images)]);
             }
 
-            // Update data produk berdasarkan ID
             $product = Product::findOrFail($id);
             $product->update([
                 'product_name' => $request->product_name,
@@ -151,12 +152,12 @@ class ProductController extends Controller
                 'discount_amount' => $request->discount_amount,
                 'stock' => $request->stock,
                 'unit' => $request->unit,
-                // 'image' => json_encode($images),
+
             ]);
 
-            return redirect()->route('products')->with('success', 'Successfully Updated!');
+            return redirect()->route('products')->with('success', 'Product updated successfully.');
         } catch (\Exception $e) {
-            return redirect()->route('products.edit', $id)->with('error', 'Error Updating!: ' . $e->getMessage())->withInput();
+            return redirect()->route('products.edit', $id)->with('error', 'Error updating product: ' . $e->getMessage())->withInput();
         }
     }
 
@@ -166,10 +167,10 @@ class ProductController extends Controller
             DB::table('products')->where('id', $id)->delete();
 
             return redirect()->route('products')
-                ->with('success', ' Successfully Deleted!');
+                ->with('success', 'Product deleted successfully.');
         } catch (\Exception $e) {
             return redirect()->route('products')
-                ->with('error', 'Error Deleting!: ' . $e->getMessage());
+                ->with('error', 'Error deleting product: ' . $e->getMessage());
         }
     }
 }

@@ -36,6 +36,7 @@
     @yield('content')
     {{-- @yield('content') --}}
 
+
     @include('layouts.footer')
 
   <!-- Control Sidebar -->

@@ -31,9 +31,13 @@
                 <h3 class="card-title col align-self-center">Edit Products</h3>
               </div>
               <div class="card-body">
-                @if (session('error'))
+              @if ($errors->any())
                     <div class="alert alert-danger bg-danger" role="alert">
-                        {{ session('error') }}
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
                     </div>
                 @endif
                 <form action="{{ route('products.update', $product->id) }}" method="post" enctype="multipart/form-data">
@@ -112,7 +116,7 @@
               <div class="card-footer bg-transparent border">
                 <button type="submit" class="btn btn-primary">Save</button>
               </div>
-              </form>
+
             </div>
             <!-- /.card -->
           </div>

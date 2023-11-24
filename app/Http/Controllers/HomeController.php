@@ -6,10 +6,10 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function index(){
-       return view('helloworld');
+    public function index() {
+        return view('hello');
     }
-    
+
     public function main() {
         return view('pages.dashboard');
     }
@@ -18,4 +18,3 @@ class HomeController extends Controller
         return view('pages.product');
     }
 }
-?>

@@ -28,7 +28,6 @@
           <div class="col-12">
             <div class="card">
                 <div class="col-12 justify-content-center">
-
                 </div>
               <div class="card-header d-flex justify-content-end bg-primary">
                 <h3 class="card-title col align-self-center">Add Products</h3>
@@ -36,11 +35,15 @@
             <form action="{{ route('products.store') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="card-body">
-                    @if (session('error'))
+                @if ($errors->any())
                     <div class="alert alert-danger bg-danger" role="alert">
-                        {{ session('error') }}
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
                     </div>
-                    @endif
+                @endif
                     <div class="form-group">
                     <label for="product_code">Product Code</label>
                     <input type="text" class="form-control" id="productCode" name="product_code" placeholder="Product Code">
@@ -65,7 +68,7 @@
                         <div class="form-group">
                         <label for="price">Price</label>
                         <div class="input-group mb-3">
-                            <input type="number" name="price" id="price" class="form-control">
+                            <input type="number" name="price" id="price" class="form-control" placeholder="Price">
                             <div class="input-group-append">
                             <span class="input-group-text">.00</span>
                             </div>
@@ -74,7 +77,7 @@
                         <div class="form-group">
                         <label for="discount_amount">Discount</label>
                         <div class="input-group mb-3">
-                            <input type="number" name="discount_amount" id="discount_amount" class="form-control">
+                            <input type="number" name="discount_amount" id="discount_amount" class="form-control" placeholder="Discount">
                             <div class="input-group-append">
                             <span class="input-group-text">%</span>
                             </div>

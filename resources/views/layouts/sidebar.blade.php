@@ -14,7 +14,7 @@
           <img src="{{ asset('image/avatar.png') }}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Putri Deylin N N</a>
+          <a href="#" class="d-block">Putri Deylin N</a>
         </div>
       </div>
 
@@ -33,6 +33,8 @@
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
           <li class="nav-item menu-open">
             <a href="{{ route('dashboard') }}" class="nav-link active">
               <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -46,10 +48,19 @@
               <i class="nav-icon 	fas fa-shopping-cart"></i>
               <p>
                 Products
-                {{-- <span class="right badge badge-danger">New</span> --}}
               </p>
             </a>
           </li>
+          <form action="{{ route('logout') }}" method="POST">
+            @csrf
+            <li class="nav-item">
+                <button type="submit" class="nav-link active">
+                    <p style="text-align: left;">
+                        Logout
+                    </p>
+                </button>
+            </li>
+        </form>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

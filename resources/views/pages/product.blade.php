@@ -11,7 +11,7 @@
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
+              <li class="breadcrumb-item"><a href="{{ route('products') }}">Products</a></li>
               <li class="breadcrumb-item active">Products</li>
             </ol>
           </div>
@@ -36,7 +36,7 @@
                   <!-- search data -->
                   <form action="{{ route('products') }}" method="get">
                     <div class="input-group col-sm-11 mr-3">
-                      <input type="text" name="search" id="search" class="form-control" placeholder="Search">
+                      <input type="text" name="search" class="form-control" placeholder="Search" value="{{ request('search') }}">
                       <div class="input-group-append">
                           <button class="btn btn-default" type="submit">
                             <i class="fas fa-search fa-sm"></i>
@@ -95,16 +95,20 @@
                         @endif
                         </td>
                         <td class="text-center">
-                          <div class="btn-group" role="group" aria-label="Product">
-                            <a href="{{ route('products.edit', $product->id) }}" class="btn btn-warning"><i class="nav-icon fas fa-edit mr-2"></i>Edit</a>
+                      <div class="btn-group" role="group" aria-label="Product">
+                          <a href="{{ route('products.edit', $product->id) }}" class="btn btn-warning">
+                              <i class="nav-icon fas fa-edit mr-2"></i>Edit
+                          </a>
 
-                            <form action="{{ route('products.delete', $product->id) }}" method="post">
-                                @csrf
-                                @method('delete')
-                                <button class="btn btn-danger ml-2" type="submit"><i class="nav-icon fas fa-trash-alt mr-2"></i>Delete</button>
+                          <form action="{{ route('products.delete', $product->id) }}" method="post">
+                              @csrf
+                              @method('delete')
+                              <button class="btn btn-danger ml-2" type="submit" onclick="return confirm('Are you sure you want to delete this product?')">
+                                  <i class="nav-icon fas fa-trash-alt mr-2"></i>Delete
+                              </button>
                           </form>
-                        </button>
-                        </td>
+                      </div>
+                    </td>
                     </tr>
                     @endforeach
                   </tbody>

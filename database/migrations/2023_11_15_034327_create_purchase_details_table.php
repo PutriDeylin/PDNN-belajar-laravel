@@ -11,17 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('products_circulations', function (Blueprint $table) {
+        Schema::create('purchase_details', function (Blueprint $table) {
             $table->id();
-            $table->date('trx_date');
-            $table->string('reff')->nullable();
-            $table->integer('in')->default(0);
-            $table->integer('out')->default(0);
-            $table->integer('product_id');
-            $table->integer('remaining_stock');
+            $table->foreignId('purchase_id')->constrained('purchase');
+            $table->foreignId('product_id')->constrained()->nullable();
+            $table->integer('quantity');
+            $table->decimal('amount_total', 15, 2)->default(0.00);
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();
             $table->timestamps();
+            $table->index('product_id', 'index_product_id_mul');
         });
     }
 
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('products_circulations');
+        Schema::dropIfExists('purchase_details');
     }
 };

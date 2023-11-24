@@ -10,7 +10,7 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'category_name' => 'required',
+            'category_name' => 'required'
         ]);
 
         DB::table('product_categories')->insert([
@@ -18,7 +18,7 @@ class CategoryController extends Controller
         ]);
 
         return redirect()->route('pages.category')
-            ->with('success', 'Successfully Added!.');
+            ->with('success', 'Product created successfully.');
     }
 
     public function getCategories()

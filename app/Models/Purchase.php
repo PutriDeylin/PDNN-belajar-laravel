@@ -16,8 +16,7 @@ class Purchase extends Model
         return $this->hasMany(PurchaseDetail::class);
     }
 
-    public function vendor()
-    {
+    public function vendor(){
         return $this->belongsTo(Vendor::class);
     }
 }
