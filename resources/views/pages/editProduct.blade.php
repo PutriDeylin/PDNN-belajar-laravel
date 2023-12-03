@@ -1,8 +1,6 @@
 @extends('layouts.main')
 
 @section('content')
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid">
@@ -67,10 +65,10 @@
                         <div class="form-group">
                         <label for="price">Price</label>
                         <div class="input-group mb-3">
-                            <input type="number" name="price" id="price" class="form-control" value="{{ $product->price }}">
-                            <div class="input-group-append">
-                            <span class="input-group-text">.00</span>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Rp. </span>
                             </div>
+                            <input type="number" name="price" id="price" class="form-control" value="{{ $product->price }}">
                         </div>
                       </div>
                         <div class="form-group">
@@ -95,10 +93,18 @@
                             <div class="form-group">
                             <label for="image">Image</label>
                             <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="image" name="image[]" multiple>
+                                <input type="file" class="custom-file-input" id="image" name="images[]" multiple>
                                 <label class="custom-file-label" for="image">Choose file</label>
                                 </div>
                               </div>
+                               @if ($product->image)
+                              <div>
+                                <label>Current Image :</label>
+                                @foreach($product->image as $image)
+                                <img src="{{ asset('storage/image/' . $image) }}" alt="image" style="max-width: 100px; margin-right: 10px;">
+                                @endforeach
+                              </div>
+                              @endif 
                             <div class="col-3">
                         <div class="form-group">
                         <label for="toogleActive">Active</label>

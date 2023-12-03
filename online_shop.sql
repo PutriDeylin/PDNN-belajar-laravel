@@ -213,7 +213,7 @@ CREATE TABLE `products` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `products_product_code_unique` (`product_code`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -222,7 +222,7 @@ CREATE TABLE `products` (
 
 LOCK TABLES `products` WRITE;
 /*!40000 ALTER TABLE `products` DISABLE KEYS */;
-INSERT INTO `products` VALUES (23,'Jam Tangan',3,'P0001','1','jam',200000.00,'pcs',1.00,10,'[\"1700742952_647240.jpg\"]',NULL,NULL,NULL,NULL),(25,'Sepatu Rebook',1,'P0002','1','sepatu',300000.00,'pcs',1.00,10,'[\"1700746602_SepatuNewBalance.jpg\"]',NULL,NULL,NULL,NULL),(26,'Facial Wash',2,'P0003','1','Facial Wash',100000.00,'pcs',1.00,2,'[\"1700743358_923758.jpg\",\"1700743358_933992.jpg\"]',NULL,NULL,NULL,NULL);
+INSERT INTO `products` VALUES (23,'Jam Tangan',3,'P0001','1','jam',200000.00,'pcs',1.00,5,'[\"1700742952_647240.jpg\"]',NULL,NULL,NULL,'2023-12-01 17:52:18'),(25,'Sepatu',1,'P0002','1','sepatu',300000.00,'pcs',1.00,10,'[\"1700746602_SepatuNewBalance.jpg\"]',NULL,NULL,NULL,'2023-12-02 18:21:28'),(26,'Facial Wash',2,'P0003','1','Facial Wash',100000.00,'pcs',1.00,10,'[\"1700743358_923758.jpg\",\"1700743358_933992.jpg\"]',NULL,NULL,NULL,'2023-12-02 07:03:19'),(58,'Sunscreen',2,'P0004','1','sunscreen',32000.00,'pcs',5.00,6,'[\"1701480559_572066.jpeg\"]',NULL,NULL,NULL,'2023-12-02 19:13:31'),(61,'Sepatu',1,'P0005','1','sepatu',300000.00,'pcs',1.00,10,'[\"1701566431_SepatuNike.jpg\"]',NULL,NULL,NULL,NULL),(62,'Sepatu',1,'P0006','1','sepatu',100000.00,'pcs',1.00,6,'[\"1701566462_SepatuReebok.jpg\"]',NULL,NULL,NULL,'2023-12-02 18:18:59'),(63,'Sepatu',1,'P0007','1','Sepatu',300000.00,'pcs',1.00,5,'[\"1701569541_365347.jpg\"]',NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `products` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -442,6 +442,7 @@ CREATE TABLE `users` (
   `is_active` enum('1','0') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
+  `role` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_username_unique` (`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -453,7 +454,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'admin','admin@admin.com',NULL,'admin','$2y$12$2Z5.ysyZrQyWSf6Fr4lXCO6jBnvBWspzm3MVkFmHufbgFRU2b.YEO',NULL,NULL,NULL,1,'1','2023-11-22 23:11:17','2023-11-22 23:11:17'),(2,'user','user@user.com',NULL,'user','$2y$12$ymHt2CISvgT1c709qfAhqeYGkk6EKiWqi1lsX8pv0ztTNwu4x8Vx6',NULL,NULL,NULL,1,'1','2023-11-23 02:42:45','2023-11-23 02:42:45');
+INSERT INTO `users` VALUES (1,'admin','admin@admin.com',NULL,'admin','$2y$12$2Z5.ysyZrQyWSf6Fr4lXCO6jBnvBWspzm3MVkFmHufbgFRU2b.YEO',NULL,NULL,NULL,1,'1','2023-11-22 23:11:17','2023-11-22 23:11:17','admin'),(2,'user','user@user.com',NULL,'user','$2y$12$ymHt2CISvgT1c709qfAhqeYGkk6EKiWqi1lsX8pv0ztTNwu4x8Vx6',NULL,NULL,NULL,1,'1','2023-11-23 02:42:45','2023-11-23 02:42:45','user');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -503,4 +504,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-24 12:43:07
+-- Dump completed on 2023-12-03 12:55:19

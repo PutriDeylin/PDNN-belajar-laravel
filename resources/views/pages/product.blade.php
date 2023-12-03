@@ -1,7 +1,5 @@
 @extends('layouts.main')
 @section('content')
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid">
@@ -70,6 +68,7 @@
                       <th class="text-center">Product Name</th>
                       <th class="text-center">Category</th>
                       <th class="text-center">Price</th>
+                      <th class="text-center">Stok</th>
                       <th class="text-center">Image</th>
                       <th class="text-center">Action</th>
                     </tr>
@@ -81,7 +80,8 @@
                         <td>{{ $startNumber++ }}</td>
                         <td>{{ $product->product_name }}</td>
                         <td>{{ $product->category_name }}</td>
-                        <td>{{ $product->price }}</td>
+                        <td>Rp. {{ number_format($product->price, 0, ',', '.') }}</td>
+                        <td>{{ $product->stock }}</td>
                         <td>
                         @php
                             $images = json_decode($product->image);

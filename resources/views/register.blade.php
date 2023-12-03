@@ -13,6 +13,8 @@
   <link rel="stylesheet" href="../../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+  <!-- Password -->
+  <link rel="stylesheet" href="../dist/css/loginredirect.css">
 </head>
 <body class="hold-transition register-page">
 <div class="register-box">
@@ -50,13 +52,13 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="password" name="password" class="form-control" placeholder="Password">
+          <input type="password" class="form-control" placeholder="Password" name="password" id="passwordField">
           <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-lock"></span>
-            </div>
+              <span class="input-group-text" id="showPasswordIcon">
+                  <i class="fa fa-eye" id="eyeIcon"></i> 
+              </span>
           </div>
-        </div>
+      </div>
         <div class="row">
           <div class="col-8">
             <div class="icheck-primary">
@@ -80,8 +82,7 @@
           Sign up using Facebook
         </a>
         <a href="#" class="btn btn-block btn-danger">
-          <i class="fab fa-google-plus mr-2"></i>
-          Sign up using Google+
+          <i class="fab fa-google mr-2"></i> Sign up using Google
         </a>
       </div>
 
@@ -98,5 +99,7 @@
 <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../../dist/js/adminlte.min.js"></script>
+<!-- Password -->
+<script src="../dist/js/pass.js"></script>
 </body>
 </html>

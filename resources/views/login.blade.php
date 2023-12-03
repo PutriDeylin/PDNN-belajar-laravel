@@ -13,6 +13,8 @@
   <link rel="stylesheet" href="../../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+  <!-- Password -->
+  <link rel="stylesheet" href="../dist/css/loginredirect.css">
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
@@ -35,13 +37,13 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="password" name="password" class="form-control" placeholder="Password">
+          <input type="password" class="form-control" placeholder="Password" name="password" id="passwordField">
           <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-lock"></span>
-            </div>
+              <span class="input-group-text" id="showPasswordIcon">
+                  <i class="fa fa-eye" id="eyeIcon"></i> 
+              </span>
           </div>
-        </div>
+      </div>
         <div class="row">
           <div class="col-8">
             <div class="icheck-primary">
@@ -68,10 +70,6 @@
         </a>
       </div>
       <!-- /.social-auth-links -->
-
-      <p class="mb-1">
-        <a href="#">I forgot my password</a>
-      </p>
       <p class="mb-0">
         <a href="{{ route('register') }}" class="text-center">Register a new membership</a>
       </p>
@@ -88,5 +86,7 @@
 <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../../dist/js/adminlte.min.js"></script>
+<!-- Password -->
+<script src="../dist/js/pass.js"></script>
 </body>
 </html>

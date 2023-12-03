@@ -1,8 +1,6 @@
 @extends('layouts.main')
 
 @section('content')
-      <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid">
@@ -68,10 +66,10 @@
                         <div class="form-group">
                         <label for="price">Price</label>
                         <div class="input-group mb-3">
-                            <input type="number" name="price" id="price" class="form-control" placeholder="Price">
-                            <div class="input-group-append">
-                            <span class="input-group-text">.00</span>
+                            <div class="input-group-prepend">
+                            <span class="input-group-text">Rp. </span>
                             </div>
+                            <input type="number" name="price" id="price" class="form-control" placeholder="Price">
                         </div>
                         </div>
                         <div class="form-group">
